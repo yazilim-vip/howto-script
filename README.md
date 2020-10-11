@@ -30,10 +30,17 @@ npm install --save @yazilimvip/howto-script
 ```
 
 ### HowTo Script Docker Image
+**HowTo Service Usage:**
+```
+docker run -v <host_howto_dir>:/usr/src/app/howto \
+  -e OPTS="--mode=service \
+  --port=<port>" -p <port>:<port> \
+  --name howto-archive yazilimvip/howto-archive:latest
+```
+
 ```
   Options:
     -p  --port      Web service port. (Only needed for SERVICE mod) (default: 5000)
-    -d  --dir       Root dir that Howto content will be stored. If not supplied, mock data will be used.
     -m  --mode      Run mode of application Options:(SERVICE BATCH) (default: SERVICE)
     -o  --output    Batch output file (Only needed for BATCH mod)  (default: output.json)
     -h  --help      Display this help.
