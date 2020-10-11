@@ -26,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/yazilim.vip/projects/yazilimvip/howto-script.git"
+    "url": "git+https://github.com/yazilim-vip/howto-script.git"
   },
   "author": "Mehmet Arif Emre Şen",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/yazilim.vip/projects/yazilimvip/howto-script/issues"
+    "url": "https://github.com/yazilim-vip/howto-script/issues"
   },
-  "homepage": "https://gitlab.com/yazilim.vip/projects/yazilimvip/howto-script#readme",
+  "homepage": "https://github.com/yazilim-vip/howto-script#readme",
   "dependencies": {
     "algoliasearch": "^4.5.1",
     "child_process": "^1.0.2",
