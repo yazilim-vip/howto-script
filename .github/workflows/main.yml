@@ -1,9 +1,9 @@
-name: Publish Docker image
+name: Publish Docker Image and Node Module
 on:
   release:
     types: [published]
 jobs:
-  build:
+  npm_publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -24,8 +24,8 @@ jobs:
         name: bin
         path: bin
 
-  push_to_registry:
-    needs: [ build ]
+  docker_image_publish:
+    needs: [ npm_publish ]
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
