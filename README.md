@@ -6,6 +6,7 @@
 A helper script to genarate JSON from your HowTo Archive. \
 Let's assume you have an archive that consists of *.md files as follows
 
+```
 |
 |- howto1.md
 |- howto2.md
@@ -13,6 +14,7 @@ Let's assume you have an archive that consists of *.md files as follows
 |---- howto3.md
 |- cat2
 |---- howto4.md
+```
 
 The script will scan all *.md files under that folder recursively and generates following sample JSON:
 
