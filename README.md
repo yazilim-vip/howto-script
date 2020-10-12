@@ -107,4 +107,4 @@ docker run -v <host_howto_dir>:/usr/src/app/howto \
 ```
 
 ## License
-MIT © [maemresen](https://github.com/maemresen)
+MIT © [yazilim.vip](https://www.yazilim.vip/)
