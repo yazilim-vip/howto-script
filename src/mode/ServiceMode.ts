@@ -3,56 +3,65 @@ import createError from "http-errors";
 import cors from "cors";
 import * as http from "http";
 
-import App from "./App";
+import generateHowtoAsync from "../service/HowtoServiceAsync";
+import { DEFAULT_SERVICE_PORT } from "../constants/Constant";
 
-import generateHowto from "../service/HowtoService";
-import {
-  DEFAULT_SERVICE_PORT,
-} from "../constants/Constant";
+const ServiceMode = (
+  _howtoRootDir: string | null,
+  _port: string = DEFAULT_SERVICE_PORT
+): void => {
+  const app = express();
 
-export default class ServiceMode extends App {
-  server?: http.Server;
-  app: express.Application;
-  port: string;
+  const configureApp = () => {
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(cors());
 
-  constructor(
-    howtoRootDir: string | null,
-    port: string = DEFAULT_SERVICE_PORT
-  ) {
-    super(howtoRootDir);
-    this.port = port;
-    this.app = express();
+    app.set("port", _port);
+    app.use(
+      "/howto",
+      express.Router().get("/", (req: Request, res: Response) => {
+        try {
+          /*
+              Example Requests
+        
+              ROOT: /home/maemresen/tmp
+        
+              req.originalUrl =
+                /howto
+                /howto/linux
+                /howto/linux/specific_distro
+            */
+          let categoryPath = ``;
+          if (req.query.path) {
+            categoryPath += "/" + req.query.path;
+          }
 
-    // init app
-    this.configure();
-    // error handler TODO:
-  }
-
-  protected run(): void {
-    this.startServer();
-  }
-
-  configure(): void {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(cors());
-
-    this.app.use("/howto", this.getRouter());
-
+          generateHowtoAsync(_howtoRootDir, categoryPath)
+            .then((result) => {
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify(result));
+            })
+            .catch((err) => {
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify(err));
+            });
+        } catch (error) {
+          console.error(error);
+          res.json(error);
+        }
+      })
+    );
     // catch 404 and forward to error handler
-    this.app.use((req, res, next) => {
+    app.use((req, res, next) => {
       next(createError(404));
     });
+  };
 
-    this.app.set("port", this.port);
-  }
-
-  startServer(): void {
-    // console.log(this.app._router.stack);
-    this.server = http.createServer(this.app);
-    this.server.listen(this.port);
-    const port = this.port;
-    this.server.on("error", (error: NodeJS.ErrnoException): void => {
+  const startServer = () => {
+    const server = http.createServer(app);
+    server.listen(_port);
+    server.on("error", (error: NodeJS.ErrnoException): void => {
       if (error.syscall !== "listen") {
         throw error;
       }
@@ -60,11 +69,11 @@ export default class ServiceMode extends App {
       // handle specific listen errors with friendly messages
       switch (error.code) {
         case "EACCES":
-          console.error(port + " requires elevated privileges");
+          console.error(_port + " requires elevated privileges");
           process.exit(1);
           break;
         case "EADDRINUSE":
-          console.error(port + " is already in use");
+          console.error(_port + " is already in use");
           process.exit(1);
           break;
         default:
@@ -72,42 +81,13 @@ export default class ServiceMode extends App {
       }
     });
 
-    this.server.on("listening", () => {
-      console.log("Listening on " + this.port);
+    server.on("listening", () => {
+      console.log("Listening on " + _port);
     });
-  }
+  };
 
-  getRouter(): Router {
-    const router = express.Router();
-    const howtoRootDir = this.howtoRootDir;
-    router.get("/", (req: Request, res: Response) => {
-      try {
-        const handler = <T>(result: T) => {
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify(result));
-        };
+  configureApp();
+  startServer();
+};
 
-        /*
-            Example Requests
-      
-            ROOT: /home/maemresen/tmp
-      
-            req.originalUrl =
-              /howto
-              /howto/linux
-              /howto/linux/specific_distro
-          */
-        let categoryPath = ``;
-        if (req.query.path) {
-          categoryPath += "/" + req.query.path;
-        }
-
-        generateHowto(howtoRootDir, handler, categoryPath, handler);
-      } catch (error) {
-        console.error(error);
-        res.json(error);
-      }
-    });
-    return router;
-  }
-}
+export default ServiceMode;
