@@ -12,9 +12,8 @@ switch (options.mode) {
     app = new ServiceMode(options.howtoRootDir, options.port);
     break;
   case Mode.BATCH:
-    app = new BatchMode(options.howtoRootDir, options.output);
+    BatchMode(options.howtoRootDir, options.output);
     break;
   default:
     throw new Error("Unsuppoerted mod :: " + options.mode);
 }
-app.start();
