@@ -5,10 +5,8 @@ import * as http from "http";
 
 import App from "./App";
 
-import generateHowto from "../service/HowtoService";
-import {
-  DEFAULT_SERVICE_PORT,
-} from "../constants/Constant";
+import generateHowtoAsync from "../service/HowtoServiceAsync";
+import { DEFAULT_SERVICE_PORT } from "../constants/Constant";
 
 export default class ServiceMode extends App {
   server?: http.Server;
@@ -82,11 +80,6 @@ export default class ServiceMode extends App {
     const howtoRootDir = this.howtoRootDir;
     router.get("/", (req: Request, res: Response) => {
       try {
-        const handler = <T>(result: T) => {
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify(result));
-        };
-
         /*
             Example Requests
       
@@ -102,7 +95,15 @@ export default class ServiceMode extends App {
           categoryPath += "/" + req.query.path;
         }
 
-        generateHowto(howtoRootDir, handler, categoryPath, handler);
+        generateHowtoAsync(howtoRootDir, categoryPath)
+          .then((result) => {
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(result));
+          })
+          .catch((err) => {
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(err));
+          });
       } catch (error) {
         console.error(error);
         res.json(error);
