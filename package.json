@@ -1,6 +1,6 @@
 {
   "name": "@yazilimvip/howto-script",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "HowTo",
   "bin": {
     "howto-batch": "cli-batch.js",
