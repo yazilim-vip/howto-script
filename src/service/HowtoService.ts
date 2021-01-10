@@ -4,8 +4,8 @@ import { readFileSync } from 'fs'
 import { glob } from 'glob'
 
 import MOCK_CATEGORY from '../constants/MockHowtoContent'
-import Category from '../model/Category'
-import HowTo from '../model/HowTo'
+import Category from '../models/Category'
+import HowTo from '../models/HowTo'
 
 const generateHowto = (
     howtoRootDir: string | null,

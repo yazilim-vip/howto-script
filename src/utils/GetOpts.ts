@@ -1,6 +1,6 @@
 import getopts from 'getopts'
 
-import { Profile, DEFAULT_MODE, Mode } from '../constants/Constant'
+import { Profile, DEFAULT_MODE, Mode } from '../constants/constants'
 
 const getOptions = (mode: Mode | null = null): any => {
     const options = getopts(process.argv.slice(2), {

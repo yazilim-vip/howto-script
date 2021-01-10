@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Category } from '../model/Category'
-import { HowTo } from '../model/HowTo'
+import { Category } from '../models/Category'
+import { HowTo } from '../models/HowTo'
 
 export const json2CategoryMapper = (mockData: any): Category => {
     const categoryObj = JSON.parse(JSON.stringify(mockData))

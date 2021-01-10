@@ -4,7 +4,7 @@ import cors from 'cors'
 import express, { Request, Response, Router } from 'express'
 import createError from 'http-errors'
 
-import { DEFAULT_SERVICE_PORT } from '../constants/Constant'
+import { DEFAULT_SERVICE_PORT } from '../constants/constants'
 import generateHowtoAsync from '../service/HowtoServiceAsync'
 
 const ServiceMode = (_howtoRootDir: string | null, _port: string = DEFAULT_SERVICE_PORT): void => {

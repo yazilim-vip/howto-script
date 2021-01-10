@@ -1,5 +1,5 @@
-import { Category } from '../model/Category'
-import { HowTo } from '../model/HowTo'
+import { Category } from '../models/Category'
+import { HowTo } from '../models/HowTo'
 import { json2CategoryMapper } from '../utils/json2CategoryMapper'
 
 const MOCK_DATA = {

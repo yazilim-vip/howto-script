@@ -1,4 +1,4 @@
-import { Mode } from './constants/Constant'
+import { Mode } from './constants/constants'
 import BatchMode from './mode/BatchMode'
 import ServiceMode from './mode/ServiceMode'
 import getOptions from './utils/GetOpts'
