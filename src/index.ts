@@ -1,7 +1,7 @@
 import { writeFileSync } from 'fs'
 
 import { MODE_BATCH, MODE_SERVICE } from './constants'
-import { Mode, ScriptArgTypes } from './types'
+import { Mode } from './types'
 import { generateHowto } from './utils/generateHowTo'
 import { getOptions } from './utils/getOptions'
 import { WebService } from './WebService'
@@ -13,8 +13,10 @@ export * from './utils/generateHowTo'
 export * from './utils/getOptions'
 export * from './utils/json2CategoryMapper'
 
-export * from './mockCategory'
 export * from './constants'
+export * from './mockCategory'
+export * from './types'
+export * from './WebService'
 
 export const BatchMode = (): void => {
     Main(MODE_BATCH)
