@@ -2,12 +2,12 @@ import { readFileSync } from 'fs'
 
 import { glob } from 'glob'
 
-import MOCK_CATEGORY from '../constants/MockHowtoContent'
-import Category from '../models/Category'
-import HowTo from '../models/HowTo'
+import { MOCK_CATEGORY } from '../mockCategory'
+import { Category } from '../models/Category'
+import { HowTo } from '../models/HowTo'
 
-const generateHowto = (howtoRootDir: string | null, categoryPath = ''): Promise<Category> => {
-    const parseScriptOutput = (categoryPath: string, howtoFilePathList: string[]): Category => {
+export const generateHowto = (howtoRootDir: string | undefined, categoryPath = ''): Promise<Category | undefined> => {
+    const parseScriptOutput = (categoryPath: string, howtoFilePathList: string[]): Category | undefined => {
         howtoFilePathList.pop() // to remove trailing empty line at the end
 
         // put all file markdown content to the array
@@ -54,8 +54,11 @@ const generateHowto = (howtoRootDir: string | null, categoryPath = ''): Promise<
                 // Then create new menu item and append as sub-category to current category
 
                 if (foundCategory === null) {
-                    foundCategory = new Category()
-                    foundCategory.name = category
+                    foundCategory = {
+                        name: '',
+                        subCategoryList: {},
+                        howtoList: {}
+                    }
                     currentHowtoCategoryList[category] = foundCategory
                 }
 
@@ -75,20 +78,17 @@ const generateHowto = (howtoRootDir: string | null, categoryPath = ''): Promise<
             const markdownContent = readFileSync(howtoFilePath, 'utf8')
             const tempList = categoryList
             tempList.shift()
-            const howto = new HowTo()
-            howto.categoryList = tempList
-            howto.label = label
-            howto.filePath = howtoFilePath
-            howto.markdownContent = markdownContent
+            // const howto = new HowTo()
+            const howto: HowTo = {
+                categoryList: tempList,
+                label: label,
+                filePath: howtoFilePath,
+                markdownContent: markdownContent
+            }
             currentHowtoList[label] = howto
         })
 
-        const result = howtoCategoryList['']
-        if (result === undefined) {
-            return new Category()
-        } else {
-            return result
-        }
+        return howtoCategoryList['']
     }
 
     return new Promise<Category>((resolve, reject) => {
@@ -104,10 +104,12 @@ const generateHowto = (howtoRootDir: string | null, categoryPath = ''): Promise<
                 } else {
                     //   const result = parseScriptOutput();
                     const result = parseScriptOutput(categoryPath, files)
-                    if (Object.keys(result).length === 0) {
+                    if (result && Object.keys(result).length === 0) {
                         reject('error')
-                    } else {
+                    } else if (result) {
                         resolve(result)
+                    } else {
+                        reject('error')
                     }
                 }
             } catch (error) {
@@ -117,5 +119,3 @@ const generateHowto = (howtoRootDir: string | null, categoryPath = ''): Promise<
         })
     })
 }
-
-export default generateHowto

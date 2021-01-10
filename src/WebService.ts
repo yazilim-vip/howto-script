@@ -4,10 +4,10 @@ import cors from 'cors'
 import express, { Request, Response, Router } from 'express'
 import createError from 'http-errors'
 
-import { DEFAULT_SERVICE_PORT } from '../constants/constants'
-import generateHowtoAsync from '../service/HowtoServiceAsync'
+import { DEFAULT_SERVICE_PORT } from './constants'
+import { generateHowto } from './utils/generateHowTo'
 
-const ServiceMode = (_howtoRootDir: string | null, _port: string = DEFAULT_SERVICE_PORT): void => {
+export const WebService = (_howtoRootDir: string, _port: number = DEFAULT_SERVICE_PORT): void => {
     const app = express()
 
     const configureApp = () => {
@@ -35,7 +35,7 @@ const ServiceMode = (_howtoRootDir: string | null, _port: string = DEFAULT_SERVI
                         categoryPath += '/' + req.query.path
                     }
 
-                    generateHowtoAsync(_howtoRootDir, categoryPath)
+                    generateHowto(_howtoRootDir, categoryPath)
                         .then((result) => {
                             res.setHeader('Content-Type', 'application/json')
                             res.end(JSON.stringify(result))
@@ -87,5 +87,3 @@ const ServiceMode = (_howtoRootDir: string | null, _port: string = DEFAULT_SERVI
     configureApp()
     startServer()
 }
-
-export default ServiceMode

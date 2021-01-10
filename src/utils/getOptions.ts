@@ -1,8 +1,9 @@
 import getopts from 'getopts'
 
-import { Profile, DEFAULT_MODE, Mode } from '../constants/constants'
+import { DEFAULT_MODE, DEFAULT_PROFILE, MODE_BATCH, MODE_SERVICE, PROFILE_DEV, PROFILE_PROD } from '../constants'
+import { Profile, ScriptArgTypes, Mode } from '../types'
 
-const getOptions = (mode: Mode | null = null): any => {
+export const getOptions = (preDefinedMode: Mode | undefined): ScriptArgTypes => {
     const options = getopts(process.argv.slice(2), {
         alias: {
             port: 'p',
@@ -13,7 +14,7 @@ const getOptions = (mode: Mode | null = null): any => {
         },
         default: {
             port: 5000,
-            mode: Mode[DEFAULT_MODE],
+            mode: DEFAULT_MODE,
             dir: null,
             output: 'output.json',
             help: false
@@ -24,19 +25,20 @@ const getOptions = (mode: Mode | null = null): any => {
         const profile = process.env.HOWTO_PROFILE || ''
         switch (profile.toLowerCase()) {
             case 'dev':
-                return Profile.DEV
+                return PROFILE_DEV
             case 'prod':
-                return Profile.PROD
+                return PROFILE_PROD
         }
-        return Profile.PROD
+        return DEFAULT_PROFILE
     }
 
     const getMode = (): Mode => {
+        console.log(options.mode.toLowerCase())
         switch (options.mode.toLowerCase()) {
-            case 'batch':
-                return Mode.BATCH
-            case 'service':
-                return Mode.SERVICE
+            case MODE_BATCH:
+                return MODE_BATCH
+            case MODE_SERVICE:
+                return MODE_SERVICE
             default:
                 return DEFAULT_MODE
         }
@@ -65,8 +67,8 @@ const getOptions = (mode: Mode | null = null): any => {
     const printHelp = () => {
         let helpMsg
 
-        switch (mode) {
-            case Mode.BATCH:
+        switch (preDefinedMode) {
+            case MODE_BATCH:
                 helpMsg = `
   Usage: howto-batch [-d|--dir] [-o|--output] [-h|--help]   
 
@@ -77,7 +79,7 @@ const getOptions = (mode: Mode | null = null): any => {
 `
                 break
 
-            case Mode.SERVICE:
+            case MODE_SERVICE:
                 helpMsg = `
   Usage: howto-service [-p|--port] [-d|--dir] [-h|--help]   
 
@@ -111,12 +113,11 @@ const getOptions = (mode: Mode | null = null): any => {
 
     return {
         profile: getProfile(),
+        mode: preDefinedMode || getMode(),
         port: options.port,
-        mode: getMode(),
         mock: options.dir ? false : true,
         howtoRootDir: options.dir,
-        output: options.output
+        output: options.output,
+        help: false
     }
 }
-
-export default getOptions
