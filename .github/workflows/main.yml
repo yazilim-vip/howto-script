@@ -1,24 +1,27 @@
 name: Publish Docker Image and Node Module
 on:
+  push:
+    branches:
+      - "main"
   release:
-    types: [published]
+    types:
+      - "published"
 jobs:
   npm_publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # Setup .npmrc file to publish to npm
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
-        registry-url: 'https://registry.npmjs.org'
+        node-version: "12.x"
+        registry-url: "https://npm.pkg.github.com/yazilim-vip"
     - run: | 
-        npm install
-        npm run build
-        npm run package:linux
-        npm publish 
+        yarn install
+        yarn build
+        yarn package:linux
+        yarn publish 
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/upload-artifact@master
       with:
         name: bin
