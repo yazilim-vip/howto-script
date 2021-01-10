@@ -1,7 +1,6 @@
-import getOptions from "./utils/GetOpts";
+import { Mode } from './constants/Constant'
+import BatchMode from './mode/BatchMode'
+import getOptions from './utils/GetOpts'
 
-import BatchMode from "./mode/BatchMode";
-import { Mode } from "./constants/Constant";
-
-const options = getOptions(Mode.BATCH);
-BatchMode(options.howtoRootDir, options.output);
+const options = getOptions(Mode.BATCH)
+BatchMode(options.howtoRootDir, options.output)

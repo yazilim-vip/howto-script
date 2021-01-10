@@ -1,4 +1,5 @@
-node_modules
-dist
-old
-tsconfig.json
+build/
+dist/
+node_modules/
+.snapshots/
+*.min.js
