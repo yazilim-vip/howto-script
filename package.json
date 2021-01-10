@@ -39,14 +39,10 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
     "express": "^4.17.1",
-    "firebase": "^7.23.0",
     "getopts": "^2.2.5",
     "glob": "^7.1.6",
-    "http-errors": "~1.6.3",
-    "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "^4.0.3"
+    "http-errors": "~1.6.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",
@@ -70,6 +66,9 @@
     "eslint-plugin-standard": "^4.0.1",
     "npm-run-all": "^4.1.5",
     "pkg": "^4.4.9",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "debug": "~2.6.9",
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^4.0.3"
   }
 }
