@@ -18,7 +18,6 @@ jobs:
     - run: | 
         yarn install
         yarn build
-        yarn package:linux
         yarn publish 
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
