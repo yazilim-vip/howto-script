@@ -17,14 +17,14 @@ export * from './mockCategory'
 export * from './constants'
 
 export const BatchMode = (): void => {
-    main(MODE_BATCH)
+    Main(MODE_BATCH)
 }
 
 export const ServiceMode = (): void => {
-    main(MODE_SERVICE)
+    Main(MODE_SERVICE)
 }
 
-const main = (mode: Mode | undefined): void => {
+const Main = (mode: Mode | undefined): void => {
     const options = getOptions(mode)
 
     switch (options.mode) {
