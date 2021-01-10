@@ -8,7 +8,7 @@
   },
   "files": [
     "build/**/*",
-    "bin"
+    "bin/*.js"
   ],
   "scripts": {
     "start:service": "ts-node-dev src/ServiceMain.ts",
