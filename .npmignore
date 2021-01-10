@@ -1,0 +1,8 @@
+Dockerfile
+README.md
+init.sh
+node_modules
+output.json
+src
+tsconfig.json
+yarn.lock

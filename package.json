@@ -17,9 +17,9 @@
     "build:clean": "rm -rf build",
     "build:compile": "npx tsc",
     "package": "npm run build && run-p package:linux package:mac package:win",
-    "package:linux": "OS=linux;rimraf bin/howto-script -$OS-x64;pkg cli.js --target node14-$OS-x64 -o bin/howto-script-$OS-x64",
-    "package:mac": "OS=macos;rimraf bin/howto-script-$OS-x64;pkg cli.js --target node14-$OS-x64 -o bin/howto-script-$OS-x64",
-    "package:win": "OS=win;rimraf bin/howto-script-$OS-x64;pkg cli.js --target node14-$OS-x64 -o bin/howto-script-$OS-x64",
+    "package:linux": "OS=linux;rimraf bundle/howto-script-$OS-x64;pkg ./bin/cli.js --target node14-$OS-x64 -o bundle/howto-script-$OS-x64",
+    "package:mac": "OS=macos;rimraf bundle/howto-script-$OS-x64;pkg ./bin/cli.js --target node14-$OS-x64 -o bundle/howto-script-$OS-x64",
+    "package:win": "OS=win;rimraf bundle/howto-script-$OS-x64;pkg ./bin/cli.js --target node14-$OS-x64 -o bundle/howto-script-$OS-x64",
     "docker": "run-s build package:linux docker:image docker:push",
     "docker:image": "cross-var docker build -f Dockerfile -t yazilimvip/howto-script:$npm_package_version --no-cache .",
     "docker:push": "cross-var docker push yazilimvip/howto-script:$npm_package_version"
@@ -35,7 +35,6 @@
   },
   "homepage": "https://github.com/yazilim-vip/howto-script#readme",
   "dependencies": {
-    "algoliasearch": "^4.5.1",
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

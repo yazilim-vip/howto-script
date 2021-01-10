@@ -46,5 +46,5 @@ testem.log
 Thumbs.db
 output.txt
 build
-bin
+bundle
 package-lock.json

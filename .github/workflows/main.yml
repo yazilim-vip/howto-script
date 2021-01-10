@@ -27,21 +27,21 @@ jobs:
         name: bin
         path: bin
 
-  docker_image_publish:
-    needs: [ npm_publish ]
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - uses: actions/download-artifact@master
-        with:
-          name: bin
-          path: bin
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: yazilimvip/howto-script
-          tag_with_ref: true
+  # docker_image_publish:
+  #   needs: [ npm_publish ]
+  #   name: Push Docker image to Docker Hub
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v2
+  #     - uses: actions/download-artifact@master
+  #       with:
+  #         name: bin
+  #         path: bin
+  #     - name: Push to Docker Hub
+  #       uses: docker/build-push-action@v1
+  #       with:
+  #         username: ${{ secrets.DOCKER_USERNAME }}
+  #         password: ${{ secrets.DOCKER_PASSWORD }}
+  #         repository: yazilimvip/howto-script
+  #         tag_with_ref: true
