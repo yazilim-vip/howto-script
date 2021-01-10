@@ -1,5 +1,6 @@
-import Category from '../model/Category'
-import HowTo from '../model/HowTo'
+import { Category } from '../model/Category'
+import { HowTo } from '../model/HowTo'
+import { json2CategoryMapper } from '../utils/json2CategoryMapper'
 
 const MOCK_DATA = {
     name: 'howto',
@@ -257,7 +258,7 @@ const MOCK_DATA = {
                                         '#  Yazar : Mehmet Arif Emre Şen\n#  Tarih : 03/11/2018, 06.01\n# Başlık : Sublime Text 2, 3 - LaTeX Kurulumunun Yapılması\n# Kaynak : https://evgenii.com/blog/creating-pdf-from-latex-in-sublime-text-3\n\n#### Elde edilecek Sonuç\n\n# Sublime Text 2, 3\'e build komutu gönderildiğinde üzerinde çalışılan \n# tex uzantılı dosyanız derlenip PDF formatına dönüştürülücektir.\n\n\n#### Bu işleme başlamadan önce gereklilikler: \n\n# Bir LaTeX derleyicinizin kurulu olması gerekmektedir. \n# Bu örnekteki adımlar Ubuntu Ubuntu 16.04.5 LTS üzerinde ve Manjaro i3(17.1.12) üzerinde denenmiştir.\n\n\n#### Kurulum\n\n#1) Yeni bir Build System oluşturulur.\n\n\t#1) Sublime Text 3 açılır\n\t\n\t#2) Tools > Build System menüsünden New Build System ... seçilir\n\n\t#3) Sublime Text üzerinde yeni bir dosya açılacaktır.\n\n\t#4) Aşağıda yer alan metin açılan dosyaya yapıştırılır.\n\t\n\t\t# Metin Başlangıç\n\t\t\t{\n\t\t\t    "shell": true,\n\t\t\t    "cmd": ["/usr/bin/pdflatex $file && latexmk -c"],\n\t\t\t    "selector": "text.tex.latex"\n\t\t\t}\n\t\t# Metin Bitiş\n\n\t\t# /usr/bin/pdflatex\n\t\t\t# LaTeX metnini PDF\'e dönüştürmek için gerekli compailer. \n\n\t\t# latexmk -c\n\t\t\t# bu komut PDF oluşturulurken derleyici tarafından oluşturulan \n\t\t\t# gereksiz dosyaların temizlenmesini sağlar\n\n\n\t#5) Ardından dosya aşağıdaki isimle kaydedilir.\n\t\t# LaTeX.sublime-build\n\n\n#### Dip Not\n\n#1) Sublime Text 3\'te build işlemi yapmak için öntanımlı kısayol:\n\t# ctrl+b\n\n#2) Oluşturulan build system\'i daha sonra tekrar düzenlemek isterseniz: \n\t# LaTeX.sublime-build isimli dosyayı düzenleyebilirsiniz.\n\t\t# öntanımlı dizin : ~/.config/sublime-text-3/Packages/User\n\n#### Hatalar  \n\n#     Sorun : Sublime Text 2 için yaşanan libpng sorunu \n#  Bulgular : Derleme esnasında "symbol png_set_option version PNG16_0..." benzeri bir hata mesajı çıkması\n#     Sebep : Sorun sublime kendi libpng.16.so.16 versiyonunu barındırmaktadır.\n\n#     Çözüm : Sublime Text ile gelen llibpng.so kütüphanesini işletim sistemindeki kurulu versiyon ile değiştirmek.\n#    Kaynak : https://bbs.archlinux.org/viewtopic.php?pid=1605012#p1605012\n\n\t# Sublime Text2\'nin kurulduğu dizine gidilir.\n\t\t# ör: /opt/sublime-text\n\t\tcd /opt/sublime-text\n\n\t# lib dizininin bir yedeği alınır.\n\t\tsudo cp -R lib lib.bak\n\n\t# lib dizinine gidilir.\n\t\tcd lib\n\n\t# aşağıdaki komut çalıştırılır\n\t\tsudo ln -sf /usr/lib/libpng.so libpng16.so.16.2.0'
                                 }
                             }
-                        }
+                        },
                     },
                     howtoList: {
                         '_TODO.howto': {
@@ -374,29 +375,4 @@ const MOCK_DATA = {
     }
 }
 
-const mockCategory = (mockData: any): Category => {
-    const categoryObj = JSON.parse(JSON.stringify(mockData))
-
-    const category = new Category()
-    category.name = categoryObj.name
-
-    const subCategoryList = categoryObj.subCategoryList
-    const howtoList = categoryObj.howtoList
-
-    Object.keys(subCategoryList).forEach((sc: any) => {
-        category.addSubCategory(mockCategory(subCategoryList[sc]))
-    })
-
-    Object.keys(howtoList).forEach((ht: any) => {
-        const howto = new HowTo()
-        howto.categoryList = howtoList[ht].categoryList
-        howto.label = howtoList[ht].label
-        howto.filePath = howtoList[ht].filePath
-        howto.markdownContent = howtoList[ht].markdownContent
-        category.addHowTo(howto)
-    })
-    return category
-}
-
-const MOCK_CATEGORY = mockCategory(MOCK_DATA)
-export default MOCK_CATEGORY
+export const MOCK_CATEGORY = json2CategoryMapper(MOCK_DATA)

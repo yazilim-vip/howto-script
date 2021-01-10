@@ -1,6 +1,6 @@
-export default class HowTo {
-  categoryList: string[] = [];
-  label = "";
-  filePath = "";
-  markdownContent = "";
+export interface HowTo {
+  categoryList: string[]
+  label: string
+  filePath: string
+  markdownContent: string
 }
