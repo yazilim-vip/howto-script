@@ -2,6 +2,7 @@
   "name": "@yazilim-vip/howto-script",
   "version": "0.7.0",
   "description": "HowTo",
+  "main": "build/index.js",
   "bin": {
     "howto-batch": "bin/cli-batch.js",
     "howto-service": "bin/cli-service.js"
