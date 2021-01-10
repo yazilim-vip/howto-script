@@ -6,3 +6,7 @@ output.json
 src
 tsconfig.json
 yarn.lock
+.npmignore
+.eslintrc
+.gitignore
+.github

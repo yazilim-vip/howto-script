@@ -3,8 +3,8 @@
   "version": "0.6.5",
   "description": "HowTo",
   "bin": {
-    "howto-batch": "cli-batch.js",
-    "howto-service": "cli-service.js"
+    "howto-batch": "bin/cli-batch.js",
+    "howto-service": "bin/cli-service.js"
   },
   "files": [
     "build/**/*.js"
