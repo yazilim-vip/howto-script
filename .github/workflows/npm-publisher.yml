@@ -15,13 +15,14 @@ jobs:
       - run: |
           yarn install
           yarn build
+          yarn package:linux
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: actions/upload-artifact@master
         with:
-          name: bin
-          path: bin
+          name: bundle
+          path: bundle
 
   docker_image_publish:
     needs: [npm_publish]
