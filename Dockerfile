@@ -9,9 +9,7 @@ WORKDIR /usr/src/app
 COPY ./bundle/howto-script-linux-x64 ./
 COPY init.sh ./
 
-RUN ["chmod", "+x", "./init.sh"]
-
-# If you are building your code for production
-# RUN npm ci --only=production
+RUN ["chmod", "+x", "./howto-script-linux-x64"]
+RUN ["chmod", "+x", "./init.sh"].
 
 ENTRYPOINT [ "./init.sh"]
