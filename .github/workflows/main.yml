@@ -22,7 +22,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: bundle
-          path: bundle
+          path: /bundle
 
   docker_image_publish:
     needs: [npm_publish]
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: bundle
-          path: bundle
+          path: /bundle
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
