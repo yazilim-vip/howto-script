@@ -1,6 +1,6 @@
 {
     "name": "@yazilim-vip/howto-script",
-    "version": "0.8.2",
+    "version": "0.9.0",
     "description": "HowTo",
     "main": "build/index.js",
     "bin": {
