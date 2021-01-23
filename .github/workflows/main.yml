@@ -48,4 +48,4 @@ jobs:
         with:
           context: ${{ github.workspace }}
           push: true
-          tags: yazilim-vip/howto-script:latest
+          tags: yazilimvip/howto-script:latest
