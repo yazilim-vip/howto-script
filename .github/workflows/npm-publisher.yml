@@ -1,5 +1,8 @@
 name: NPM Publisher
 on:
+  push:
+    branches:
+      - main
   release:
     types:
       - published
