@@ -38,10 +38,12 @@
     "homepage": "https://github.com/yazilim-vip/howto-script#readme",
     "peerDependencies": {
         "child_process": "^1.0.2",
+        "getopts": "^2.2.5",
+        "glob": "^7.1.6"
+    },
+    "optionalDependencies": {
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "getopts": "^2.2.5",
-        "glob": "^7.1.6",
         "http-errors": "~1.6.3"
     },
     "devDependencies": {
