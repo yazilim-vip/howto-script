@@ -11,5 +11,5 @@ COPY init.sh ./
 
 RUN ["chmod", "+x", "./howto-script-linux-x64"]
 RUN ["chmod", "+x", "./init.sh"].
-
+EXPOSE 5000
 ENTRYPOINT [ "./init.sh"]
