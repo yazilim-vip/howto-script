@@ -55,7 +55,7 @@ export const generateHowto = (howtoRootDir: string | undefined, categoryPath = '
 
                 if (foundCategory === null) {
                     foundCategory = {
-                        name: '',
+                        name: category,
                         subCategoryList: {},
                         howtoList: {}
                     }
